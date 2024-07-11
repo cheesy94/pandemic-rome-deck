@@ -40,10 +40,10 @@ function getDeck(ciudades)
 
 	for(let i = 0; i < ciudades.length; i++)
 	{
-    let currentCity = ciudades[i]
+		let currentCity = ciudades[i]
 		for(let x = 0; x < currentCity["colors"].length; x++)
 		{
-      let currentColor = currentCity["colors"][x]
+     	let currentColor = currentCity["colors"][x]
 			let card = {city: currentCity["name"], color: currentColor};
 			deck.push(card);
 		}
@@ -76,6 +76,7 @@ function drawCard(place)
     if (place===1) barbarianDiscard.push(barbarianDeck.shift())
     if (place===-1) barbarianDiscard.push(barbarianDeck.pop())
   }
+	
   renderDeck();
 }
 
@@ -111,7 +112,7 @@ function renderDeck()
 
 function load()
 {
-  const cities = ciudades;
+  const cities = [...ciudades];
   barbarianDiscard = getDeck([cities.shift()])
   shuffle(barbarianDiscard);
   barbarianDeck = getDeck(cities.splice(0,6));
