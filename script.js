@@ -34,54 +34,46 @@ const ciudades = [
 let barbarianDeck = new Array();
 let barbarianDiscard = new Array();
 
-function getDeck(ciudades)
-{
-	let deck = new Array();
+function getDeck(ciudades) {
+  let deck = new Array();
 
-	for(let i = 0; i < ciudades.length; i++)
-	{
-		let currentCity = ciudades[i]
-		for(let x = 0; x < currentCity["colors"].length; x++)
-		{
-     	let currentColor = currentCity["colors"][x]
-			let card = {city: currentCity["name"], color: currentColor};
-			deck.push(card);
-		}
-	}
+  for(let i = 0; i < ciudades.length; i++) {
+    let currentCity = ciudades[i];
+    for(let x = 0; x < currentCity["colors"].length; x++) {
+      let currentColor = currentCity["colors"][x];
+      let card = {city: currentCity["name"], color: currentColor};
+      deck.push(card);
+    }
+  }
 
-	return deck;
+  return deck;
 }
 
-function shuffle(deck)
-{
-	// for 1000 turns
-	// switch the values of two random cards
-	for (let i = 0; i < 1000; i++)
-	{
-		let location1 = Math.floor((Math.random() * deck.length));
-		let location2 = Math.floor((Math.random() * deck.length));
-		let tmp = deck[location1];
+function shuffle(deck) {
+  // for 1000 turns
+  // switch the values of two random cards
+  for (let i = 0; i < 1000; i++) {
+    let location1 = Math.floor((Math.random() * deck.length));
+    let location2 = Math.floor((Math.random() * deck.length));
+    let tmp = deck[location1];
 
-		deck[location1] = deck[location2];
-		deck[location2] = tmp;
-	}
+    deck[location1] = deck[location2];
+    deck[location2] = tmp;
+  }
 
-	renderDeck();
+  renderDeck();
 }
 
-function drawCard(place)
-{
-  if (barbarianDeck.length > 0)
-  {
-    if (place===1) barbarianDiscard.push(barbarianDeck.shift())
-    if (place===-1) barbarianDiscard.push(barbarianDeck.pop())
+function drawCard(place) {
+  if (barbarianDeck.length > 0) {
+    if (place===1) barbarianDiscard.push(barbarianDeck.shift());
+    if (place===-1) barbarianDiscard.push(barbarianDeck.pop());
   }
 	
   renderDeck();
 }
 
-function intensify()
-{
+function intensify() {
   shuffle(barbarianDiscard);
   barbarianDeck = barbarianDiscard.concat(barbarianDeck);
   barbarianDiscard = [];
@@ -89,29 +81,26 @@ function intensify()
   renderDeck();
 }
 
-function renderDeck()
-{
-	document.getElementById('deck').innerHTML = '';
+function renderDeck() {
+  document.getElementById('deck').innerHTML = '';
   let counter = document.createElement("div");
   counter.innerHTML = barbarianDeck.length;
   counter.classList.add('counter');
   document.getElementById("deck").appendChild(counter);
   
   document.getElementById('discard').innerHTML = '';
-  for(var i = 0; i < barbarianDiscard.length; i++)
-	{
-		let card = document.createElement("div");
+  for(var i = 0; i < barbarianDiscard.length; i++) {
+    let card = document.createElement("div");
 
-		card.innerHTML = barbarianDiscard[i].city;
+    card.innerHTML = barbarianDiscard[i].city;
     card.style.backgroundColor = barbarianDiscard[i].color;
-    if (barbarianDiscard[i].color==="black") card.style.color = "white";
-		card.classList.add('card');
-		document.getElementById("discard").appendChild(card);
-	}
+    if (barbarianDiscard[i].color==="black" || barbarianDiscard[i].color==="blue") card.style.color = "white";
+    card.classList.add('card');
+    document.getElementById("discard").appendChild(card);
+  }
 }
 
-function load()
-{
+function load() {
   const cities = [...ciudades];
   barbarianDiscard = getDeck([cities.shift()])
   shuffle(barbarianDiscard);
@@ -122,7 +111,7 @@ function load()
   shuffle(barbarianTemp)
   barbarianDeck = barbarianDeck.concat(barbarianTemp)
   //barbarianDiscard = getDeck();
-	renderDeck();
+  renderDeck();
 }
 
 window.addEventListener('load', load);
